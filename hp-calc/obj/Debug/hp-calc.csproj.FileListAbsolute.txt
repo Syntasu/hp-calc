@@ -1,0 +1,10 @@
+W:\hp-calc\hp-calc\bin\Debug\hp-calc.exe.config
+W:\hp-calc\hp-calc\bin\Debug\hp-calc.exe
+W:\hp-calc\hp-calc\bin\Debug\hp-calc.pdb
+W:\hp-calc\hp-calc\obj\Debug\hp-calc.csprojResolveAssemblyReference.cache
+W:\hp-calc\hp-calc\obj\Debug\hp_calc.Form1.resources
+W:\hp-calc\hp-calc\obj\Debug\hp_calc.Properties.Resources.resources
+W:\hp-calc\hp-calc\obj\Debug\hp-calc.csproj.GenerateResource.Cache
+W:\hp-calc\hp-calc\obj\Debug\hp-calc.csproj.CoreCompileInputs.cache
+W:\hp-calc\hp-calc\obj\Debug\hp-calc.exe
+W:\hp-calc\hp-calc\obj\Debug\hp-calc.pdb
