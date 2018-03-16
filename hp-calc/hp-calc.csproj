@@ -53,9 +53,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\UIButton.cs" />
-    <Compile Include="UI\UIElement.cs" />
-    <Compile Include="UI\UIManager.cs" />
+    <Compile Include="UI\UIGenerator.cs" />
     <Compile Include="UI\UIGrid.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
