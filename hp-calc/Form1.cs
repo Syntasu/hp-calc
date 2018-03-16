@@ -33,6 +33,12 @@ namespace hp_calc
 			userInterface.AddButton("eight", new Point(7, 21), new Point(12, 26), "8", null);
 			userInterface.AddButton("nine", new Point(13, 21), new Point(18, 26), "9", null);
 
+			userInterface.AddButton("plus", new Point(19, 9), new Point(24, 14), "+", null);
+			userInterface.AddButton("minus", new Point(25, 9), new Point(30, 14), "-", null);
+
+			userInterface.AddButton("divide", new Point(19, 15), new Point(24, 20), "÷", null);
+			userInterface.AddButton("times", new Point(25, 15), new Point(30, 20), "×", null);
+
 			AddGeneratedControls();	
 		}
 
