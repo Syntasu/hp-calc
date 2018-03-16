@@ -36,6 +36,12 @@ namespace hp_calc.UI
 			height = form.Height;
 		}
 
+		public void Refresh(Form1 form)
+		{
+			width = form.Width;
+			height = form.Height;
+		}
+
 		public Tuple<Point, Size> GetPositionAndSize(int startX, int startY, int endX, int endY)
 		{
 			return new Tuple<Point, Size>(GetPosition(startX, startY), GetSize(startX, startY, endX, endY));

@@ -36,6 +36,11 @@ namespace hp_calc
 			AddGeneratedControls();	
 		}
 
+		private void Form1_ResizeEnd(object sender, EventArgs e)
+		{
+			userInterface.Refresh(this);
+		}
+
 		private void AddGeneratedControls()
 		{
 			foreach (var controls in userInterface.ControlList)
