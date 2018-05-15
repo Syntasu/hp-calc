@@ -8,19 +8,18 @@ namespace hp_calc.UI
 	public struct UIDesc
 	{
 		public string Name;
-		public Point Start;
-		public Point End;
+		public Point Position;
+		public Size Size;
 		public Control ControlRef;
 
-		public UIDesc(string name, Point start, Point end, Control controlRef)
+		public UIDesc(string name, Point position, Size size, Control controlRef)
 		{
 			Name = name;
-			Start = start;
-			End = end;
+			Position = position;
+			Size = size;
 			ControlRef = controlRef;
 		}
 	}
-
 
 	public class UIGenerator
 	{
@@ -51,50 +50,56 @@ namespace hp_calc.UI
 		{
 			this.grid = grid;
 		}
-	
-		public void Refresh(Form1 form)
+
+        //public void Refresh(Form1 form)
+        //{
+        //    grid.Refresh(form);
+
+        //    foreach (var control in controls)
+        //    {
+        //        UIDesc description = control.Value;
+
+        //        Tuple<Point, Size> postionAndSize = grid.GetPositionAndSize(description.Start, description.End);
+
+        //        description.ControlRef.Location = postionAndSize.Item1;
+        //        description.ControlRef.Size = postionAndSize.Item2;
+        //    }
+        //}
+
+        public void AddTextbox(string name, float x, float y, float w, float h)
 		{
-			grid.Refresh(form);
+            Point position = grid.Translate<Point>(x, y);
+            Size size = grid.Translate<Size>(w, h);
 
-			foreach (var control in controls)
-			{
-				UIDesc description = control.Value;
+            TextBox textBox = new TextBox
+            {
+                Text = "test",
+                Multiline = true,
+                Location = position,
+                Size = size
+            };
 
-				Tuple<Point, Size> postionAndSize = grid.GetPositionAndSize(description.Start, description.End);
+            controls.Add(name, MakeUIDescription(name, position, size, textBox));
+        }
 
-				description.ControlRef.Location = postionAndSize.Item1;
-				description.ControlRef.Size = postionAndSize.Item2;
-			}
+		public void AddButton(string name, float x, float y, float w, float h)
+		{
+            Point position = grid.Translate<Point>(x, y);
+            Size size = grid.Translate<Size>(w, h);
+
+            Button button = new Button
+            {
+                Text = "*",
+                Location = position,
+                Size = size
+            };
+
+            controls.Add(name, MakeUIDescription(name, position, size, button));
 		}
 
-		public void AddTextbox(string name, Point from, Point to)
+		private UIDesc MakeUIDescription(string name, Point position, Size size, Control control)
 		{
-			Tuple<Point, Size> postionAndSize = grid.GetPositionAndSize(from, to);
-
-			TextBox textBox = new TextBox();
-			textBox.Text = "azippityzaity";
-			textBox.Multiline = true;
-			textBox.Location = postionAndSize.Item1;
-			textBox.Size = postionAndSize.Item2;
-
-			controls.Add(name, MakeDescription(name, from, to, textBox));
-		}
-
-		public void AddButton(string name, Point from, Point to, string text, Action<object, EventArgs> callback)
-		{
-			Tuple<Point, Size> postionAndSize = grid.GetPositionAndSize(from, to);
-
-			Button button = new Button();
-			button.Text = text;
-			button.Location = postionAndSize.Item1;
-			button.Size = postionAndSize.Item2;
-
-			controls.Add(name, MakeDescription(name, from, to, button));
-		}
-
-		private UIDesc MakeDescription(string name, Point from, Point to, Control control)
-		{
-			return new UIDesc(name, from, to, control);
+			return new UIDesc(name, position, size, control);
 		}
 	}
 }
