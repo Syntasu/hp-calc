@@ -1,6 +1,5 @@
-﻿using System;
+﻿using hp_calc.Data;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace hp_calc.UI
@@ -8,11 +7,11 @@ namespace hp_calc.UI
 	public struct UIDesc
 	{
 		public string Name;
-		public Point Position;
-		public Size Size;
+		public Vector2 Position;
+		public Vector2 Size;
 		public Control ControlRef;
 
-		public UIDesc(string name, Point position, Size size, Control controlRef)
+		public UIDesc(string name, Vector2 position, Vector2 size, Control controlRef)
 		{
 			Name = name;
 			Position = position;
@@ -51,25 +50,23 @@ namespace hp_calc.UI
 			this.grid = grid;
 		}
 
-        //public void Refresh(Form1 form)
-        //{
-        //    grid.Refresh(form);
+        public void Refresh(int width, int height)
+        {
+            grid.Refresh(width, height);
 
-        //    foreach (var control in controls)
-        //    {
-        //        UIDesc description = control.Value;
+            foreach (var control in controls)
+            {
+                UIDesc desc = control.Value;
 
-        //        Tuple<Point, Size> postionAndSize = grid.GetPositionAndSize(description.Start, description.End);
-
-        //        description.ControlRef.Location = postionAndSize.Item1;
-        //        description.ControlRef.Size = postionAndSize.Item2;
-        //    }
-        //}
+                desc.ControlRef.Location = grid.Translate(desc.Position.x, desc.Position.y);
+                desc.ControlRef.Size = grid.Translate(desc.Size.x, desc.Size.y);
+            }
+        }
 
         public void AddTextbox(string name, float x, float y, float w, float h)
 		{
-            Point position = grid.Translate<Point>(x, y);
-            Size size = grid.Translate<Size>(w, h);
+            Vector2 position = grid.Translate(x, y);
+            Vector2 size = grid.Translate(w, h);
 
             TextBox textBox = new TextBox
             {
@@ -79,13 +76,13 @@ namespace hp_calc.UI
                 Size = size
             };
 
-            controls.Add(name, MakeUIDescription(name, position, size, textBox));
+            controls.Add(name, MakeUIDescription(name, new Vector2(x, y), new Vector2(w, h), textBox));
         }
 
 		public void AddButton(string name, float x, float y, float w, float h)
 		{
-            Point position = grid.Translate<Point>(x, y);
-            Size size = grid.Translate<Size>(w, h);
+            Vector2 position = grid.Translate(x, y);
+            Vector2 size = grid.Translate(w, h);
 
             Button button = new Button
             {
@@ -94,10 +91,10 @@ namespace hp_calc.UI
                 Size = size
             };
 
-            controls.Add(name, MakeUIDescription(name, position, size, button));
+            controls.Add(name, MakeUIDescription(name, new Vector2(x,y), new Vector2(w, h), button));
 		}
 
-		private UIDesc MakeUIDescription(string name, Point position, Size size, Control control)
+		private UIDesc MakeUIDescription(string name, Vector2 position, Vector2 size, Control control)
 		{
 			return new UIDesc(name, position, size, control);
 		}

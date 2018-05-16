@@ -1,34 +1,47 @@
-﻿using System;
+﻿using hp_calc.Data;
+using System;
 using System.Drawing;
 
 namespace hp_calc.UI
 {
     public class UIGrid
     {
-        private int resolution = 16;
-        private int width;
-        private int height;
+        private Vector2 intialDimensions;
+        private Vector2 currentDimensions;
 
-        public UIGrid(Form1 form, int resolution)
+        private Vector2 scalingVector
         {
-            this.resolution = resolution;
+            get
+            {
+                float x = currentDimensions.x / intialDimensions.x;
+                float y = currentDimensions.y / intialDimensions.y;
 
-            width = form.Width;
-            height = form.Height;
+                return new Vector2(x, y);
+            }
         }
 
-        public void Refresh(Form1 form)
+        public UIGrid(int width, int height)
         {
-            width = form.Width;
-            height = form.Height;
+            currentDimensions = new Vector2(width, height);
+            intialDimensions = currentDimensions;
         }
 
-        public T Translate<T>(float a, float b)
+        public void Refresh(int width, int height)
         {
-            int tx = (int)(width * a);
-            int ty = (int)(height * b);
+            currentDimensions = new Vector2(width, height);
+            Vector2 scale = scalingVector;
+        }
 
-            return (T)Activator.CreateInstance(typeof(T), new object[] { tx, ty });
+        public Vector2 Translate(float x, float y)
+        {
+            Vector2 translation = new Vector2(
+                currentDimensions.x * x,
+                currentDimensions.y * y
+            );
+
+            translation.Multiply(scalingVector);
+
+            return translation;
         }
         
     }

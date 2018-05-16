@@ -16,30 +16,38 @@ namespace hp_calc
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			UIGrid grid = new UIGrid(this, 128);
+			UIGrid grid = new UIGrid(Width, Height);
 			userInterface = new UIGenerator(grid);
 
             //Top row
-            //userInterface.AddTextbox("input", 0, 0, 128, 16 + padding);
+            userInterface.AddTextbox("input", 0.0f, GetRowOffset(0), 0.66f, 0.165f);
 
-            int c = 0;
-            float sx = 0.1f;
-            float sy = 0.1f;
+            //Row 1
+            userInterface.AddButton("one", 0.0f,     GetRowOffset(1), 0.165f, 0.165f);
+            userInterface.AddButton("two", 0.165f,   GetRowOffset(1), 0.165f, 0.165f);
+            userInterface.AddButton("three", 0.33f,  GetRowOffset(1), 0.165f, 0.165f);
+            userInterface.AddButton("times", 0.495f, GetRowOffset(1), 0.165f, 0.165f);
 
-            for (float x = 0; x < 1.0f; x += sx)
-            {
-                for (float y = 0; y < 1.0f; y += sy)
-                {
-			        userInterface.AddButton($"btn{c}", x, y, 0.1f, 0.1f);
-                    c++;
-                }
-            }
+            //Row 2
+            userInterface.AddButton("four", 0.0f,    GetRowOffset(2), 0.165f, 0.165f);
+            userInterface.AddButton("five", 0.165f,  GetRowOffset(2), 0.165f, 0.165f);
+            userInterface.AddButton("six", 0.33f,    GetRowOffset(2), 0.165f, 0.165f);
+            userInterface.AddButton("minus", 0.495f, GetRowOffset(2), 0.165f, 0.165f);
 
-   //         //Row 1
-            //userInterface.AddButton("two",   0.125f, 0, 32, 32);
-            //userInterface.AddButton("three", 0.25f, 0, 32, 32);
-            //userInterface.AddButton("four",  0.375f, 0, 32, 32);
-            //userInterface.AddButton("five",  0.5f, 0, 32, 32);
+            //Row 3
+            userInterface.AddButton("seven", 0.0f,   GetRowOffset(3), 0.165f, 0.165f);
+            userInterface.AddButton("eight", 0.165f, GetRowOffset(3), 0.165f, 0.165f);
+            userInterface.AddButton("nine", 0.33f,   GetRowOffset(3), 0.165f, 0.165f);
+            userInterface.AddButton("plus", 0.495f,  GetRowOffset(3), 0.165f, 0.165f);
+      
+            //Row 4
+            userInterface.AddButton("null0", 0.0f,  GetRowOffset(4), 0.165f, 0.165f);
+            userInterface.AddButton("zero", 0.165f, GetRowOffset(4), 0.165f, 0.165f);
+            userInterface.AddButton("null1", 0.33f, GetRowOffset(4), 0.165f, 0.165f);
+            userInterface.AddButton("is", 0.495f,   GetRowOffset(4), 0.165f, 0.165f);
+
+
+
 
 
 
@@ -68,9 +76,17 @@ namespace hp_calc
             AddGeneratedControls();	
 		}
 
+        private float GetRowOffset(int row)
+        {
+            const float padding = 0.0f;
+            const float rowSize = 0.165f;
+
+            return (row * rowSize) + padding;
+        }
+
 		private void Form1_ResizeEnd(object sender, EventArgs e)
 		{
-			//userInterface.Refresh(this);
+			userInterface.Refresh(Width, Height);
 		}
 
 		private void AddGeneratedControls()
