@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+    <element>
+        <name>display</name>
+        <position>0.0f, 0.0f</position>
+        <size>0.66f, 0.165f</size>
+    
+        <options>
+            <option type="multiline">true</option>
+            <option type="value">123</option>
+            <option type="readonly">true</option>
+        </options>
+    </element>
+
+    <element>
+        <name>display</name>
+        <type>textbox</type>
+        <position>0.0f, 0.0f</position>
+        <size>0.66f, 0.165f</size>
+
+        <options>
+            <option type="value">hey there!</option>
+        </options>
+        
+    </element>
+</layout>

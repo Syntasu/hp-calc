@@ -19,6 +19,9 @@ namespace hp_calc
 			UIGrid grid = new UIGrid(Width, Height);
 			userInterface = new UIGenerator(grid);
 
+            UIParser parser = new UIParser();
+            parser.GetInterface();
+
             //Top row
             userInterface.AddTextbox("input", 0.0f, GetRowOffset(0), 0.66f, 0.165f);
 

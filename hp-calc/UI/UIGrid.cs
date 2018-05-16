@@ -1,6 +1,4 @@
 ﻿using hp_calc.Data;
-using System;
-using System.Drawing;
 
 namespace hp_calc.UI
 {
