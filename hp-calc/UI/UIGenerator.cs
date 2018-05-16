@@ -39,8 +39,7 @@ namespace hp_calc.UI
 			{
 				foreach (var kvp in controls)
 				{
-					UIDesc desc = kvp.Value;
-					yield return desc.ControlRef;
+					yield return kvp.Value.ControlRef;
 				}
 			}
 		}

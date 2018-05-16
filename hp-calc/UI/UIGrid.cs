@@ -29,7 +29,6 @@ namespace hp_calc.UI
         public void Refresh(int width, int height)
         {
             currentDimensions = new Vector2(width, height);
-            Vector2 scale = scalingVector;
         }
 
         public Vector2 Translate(float x, float y)
@@ -38,8 +37,6 @@ namespace hp_calc.UI
                 currentDimensions.x * x,
                 currentDimensions.y * y
             );
-
-            translation.Multiply(scalingVector);
 
             return translation;
         }
