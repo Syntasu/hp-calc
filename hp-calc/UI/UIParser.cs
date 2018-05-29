@@ -53,15 +53,21 @@ namespace hp_calc.UI
             Vector2 size = Vector2.FromString(e.Size);
             Options options = e.Options;
 
-            if(e.Type == null) throw new ArgumentException("Cannot add element to layout if type is undefined.");
+            //Check if a type was defined...
+            if (e.Type == null)
+            {
+                throw new ArgumentException("Cannot add element to layout if type is undefined.");
+            }
+
+            UIArgumentList argsList = new UIArgumentList(options.Option);
 
             switch (e.Type.ToLower())
             {
                 case "textbox":
-                    currentGenerator.AddTextbox(elementName, position.x, position.y, size.x, size.y);
+                    currentGenerator.AddTextbox(elementName, position.x, position.y, size.x, size.y, argsList);
                     break;
                 case "button":
-                    currentGenerator.AddButton(elementName, position.x, position.y, size.x, size.y);
+                    currentGenerator.AddButton(elementName, position.x, position.y, size.x, size.y, argsList);
                     break;
             }
         }

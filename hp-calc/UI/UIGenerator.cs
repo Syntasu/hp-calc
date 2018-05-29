@@ -49,11 +49,6 @@ namespace hp_calc.UI
 			this.grid = grid;
 		}
 
-        public void Resize(int width, int height)
-        {
-            
-        }
-
         public void Refresh(int width, int height)
         {
             grid.Refresh(width, height);
@@ -67,15 +62,16 @@ namespace hp_calc.UI
             }
         }
 
-        public void AddTextbox(string name, float x, float y, float w, float h)
+        public void AddTextbox(string name, float x, float y, float w, float h, UIArgumentList args)
 		{
             Vector2 position = grid.Translate(x, y);
             Vector2 size = grid.Translate(w, h);
 
             TextBox textBox = new TextBox
             {
-                Text = "test",
-                Multiline = true,
+                Text = args.Get<string>(UIArgumentProperty.Value),
+                Multiline = args.Get<bool>(UIArgumentProperty.Multiline),
+                ReadOnly = args.Get<bool>(UIArgumentProperty.Readonly),
                 Location = position,
                 Size = size
             };
@@ -83,14 +79,14 @@ namespace hp_calc.UI
             controls.Add(name, MakeUIDescription(name, new Vector2(x, y), new Vector2(w, h), textBox));
         }
 
-		public void AddButton(string name, float x, float y, float w, float h)
+		public void AddButton(string name, float x, float y, float w, float h, UIArgumentList args)
 		{
             Vector2 position = grid.Translate(x, y);
             Vector2 size = grid.Translate(w, h);
 
             Button button = new Button
             {
-                Text = "*",
+                Text = args.Get<string>(UIArgumentProperty.Value),
                 Location = position,
                 Size = size
             };
