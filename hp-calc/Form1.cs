@@ -27,7 +27,7 @@ namespace hp_calc
             parser.LoadUIFromFile(userInterface);
 
             //Add the controls we generated to the form.
-            foreach (var controls in userInterface.ControlList)
+            foreach (var controls in userInterface.GetControlRenderList)
             {
                 Controls.Add(controls);
             }
@@ -45,7 +45,7 @@ namespace hp_calc
             if (e.KeyCode == Keys.F5)
             {
                 //Add the controls we generated to the form.
-                foreach (var controls in userInterface.ControlList)
+                foreach (var controls in userInterface.GetControlRenderList)
                 {
                     Controls.Remove(controls);
                 }
@@ -61,7 +61,7 @@ namespace hp_calc
                 parser.LoadUIFromFile(userInterface);
 
                 //Add the controls we generated to the form.
-                foreach (var controls in userInterface.ControlList)
+                foreach (var controls in userInterface.GetControlRenderList)
                 {
                     Controls.Add(controls);
                 }

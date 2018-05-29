@@ -28,12 +28,14 @@ namespace hp_calc.UI
 		private UIGrid grid;
         public Dictionary<string, UIDesc> Controls { get; } = new Dictionary<string, UIDesc>();
 
-        public IEnumerable<Control> ControlList
+        public IEnumerable<Control> GetControlRenderList
 		{
 			get
 			{
 				foreach (var kvp in Controls)
 				{
+                    if (!kvp.Value.Visible) continue;
+
 					yield return kvp.Value.ControlRef;
 				}
 			}
@@ -71,8 +73,12 @@ namespace hp_calc.UI
                 Size = size
             };
 
-            //bool visibillityState = args.Get<bool>(UIArgumentProperty.Visibillity);
-            Controls.Add(name, MakeUIDescription(name, new Vector2(x, y), new Vector2(w, h), textBox));
+            Controls.Add(name, MakeUIDescription(
+                name,
+                args.Get<bool>(UIArgumentProperty.Visible),
+                new Vector2(x, y),
+                new Vector2(w, h), textBox)
+            );
         }
 
 		public void AddButton(string name, float x, float y, float w, float h, UIArgumentList args)
@@ -87,16 +93,20 @@ namespace hp_calc.UI
                 Size = size
             };
 
-            //bool visibillityState = args.Get<bool>(UIArgumentProperty.Visibillity);
-            Controls.Add(name, MakeUIDescription(name, new Vector2(x,y), new Vector2(w, h), button));
-		}
+            Controls.Add(name, MakeUIDescription(
+                name,
+                args.Get<bool>(UIArgumentProperty.Visible),
+                new Vector2(x, y),
+                new Vector2(w, h), button)
+            );
+        }
 
         public void AddCheckBox(string name, float x, float y, float w, float h, UIArgumentList args)
         {
             Vector2 position = grid.Translate(x, y);
             Vector2 size = grid.Translate(w, h);
 
-            CheckBox button = new CheckBox
+            CheckBox checkbox = new CheckBox
             {
                 Text = args.Get<string>(UIArgumentProperty.Value),
                 Checked = args.Get<bool>(UIArgumentProperty.Checked),
@@ -104,8 +114,12 @@ namespace hp_calc.UI
                 Size = size
             };
 
-            //bool visibillityState = args.Get<bool>(UIArgumentProperty.Visibillity);
-            Controls.Add(name, MakeUIDescription(name, new Vector2(x, y), new Vector2(w, h), button));
+            Controls.Add(name, MakeUIDescription(
+                name,
+                args.Get<bool>(UIArgumentProperty.Visible),
+                new Vector2(x, y),
+                new Vector2(w, h), checkbox)
+            );
         }
 
         public void AddLabel(string name, float x, float y, float w, float h, UIArgumentList args)
@@ -113,15 +127,19 @@ namespace hp_calc.UI
             Vector2 position = grid.Translate(x, y);
             Vector2 size = grid.Translate(w, h);
 
-            Label button = new Label
+            Label label = new Label
             {
                 Text = args.Get<string>(UIArgumentProperty.Value),
                 Location = position,
                 Size = size
             };
 
-            //bool visibillityState = args.Get<bool>(UIArgumentProperty.Visibillity);
-            Controls.Add(name, MakeUIDescription(name, new Vector2(x, y), new Vector2(w, h), button));
+            Controls.Add(name, MakeUIDescription(
+                name,
+                args.Get<bool>(UIArgumentProperty.Visible),
+                new Vector2(x, y),
+                new Vector2(w, h), label)
+            );
         }
 
         public void AddList(string name, float x, float y, float w, float h, UIArgumentList args)
@@ -129,14 +147,18 @@ namespace hp_calc.UI
             Vector2 position = grid.Translate(x, y);
             Vector2 size = grid.Translate(w, h);
 
-            ListBox button = new ListBox
+            ListBox list = new ListBox
             {
                 Location = position,
                 Size = size,
             };
 
-            //bool visibillityState = args.Get<bool>(UIArgumentProperty.Visibillity);
-            Controls.Add(name, MakeUIDescription(name, new Vector2(x, y), new Vector2(w, h), button));
+            Controls.Add(name, MakeUIDescription(
+                name,
+                args.Get<bool>(UIArgumentProperty.Visible),
+                new Vector2(x, y),
+                new Vector2(w, h), list)
+            );
         }
 
         public void AddRadio(string name, float x, float y, float w, float h, UIArgumentList args)
@@ -152,13 +174,17 @@ namespace hp_calc.UI
                 Size = size,
             };
 
-            //bool visibillityState = args.Get<bool>(UIArgumentProperty.Visibillity);
-            Controls.Add(name, MakeUIDescription(name, new Vector2(x, y), new Vector2(w, h), button));
+            Controls.Add(name, MakeUIDescription(
+                name, 
+                args.Get<bool>(UIArgumentProperty.Visible), 
+                new Vector2(x, y), 
+                new Vector2(w, h), button)
+            );
         }
 
-        private UIDesc MakeUIDescription(string name, Vector2 position, Vector2 size, Control control)
+        private UIDesc MakeUIDescription(string name, bool visible, Vector2 position, Vector2 size, Control control)
 		{
-			return new UIDesc(name, true, position, size, control);
+			return new UIDesc(name, visible, position, size, control);
 		}
 	}
 }

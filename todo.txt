@@ -1,0 +1,24 @@
+[x] Pass argument list to the element.
+[x] Extend the current .xml file to support all needed elements.
+[ ] Element visibility.
+[ ] Full window resizing, reset scaling to 1.0 to what ever it's rescaled to.
+[ ] try/catch for xml syntax error at line 29 UIparser.cs
+[ ] A way to interact with existing elements
+	[ ] - Button callback
+	[ ] - Listview add
+	[ ] - ListView remove
+	[ ] - Checkbox checked
+	[ ] - Radio button checked/changed.
+[ ] A way of controllng visibility of elemennts
+[ ] Comment current code
+[ ] Add support for more element types in the layout system.
+[ ] Pass argument list to the element.
+[ ] Clean up existing code.
+[ ] 3 types of arrays
+[ ] Switch between them at runtime
+[ ] Add radio buttons to UI
+[ ] Show stack contents
+[ ] Expression parsing
+[ ] Expression evaluation in stack.
+[ ] Check for robustness (i.e xml syntax errors).
+[ ] Refactor UIGenerator, less repeated code?...
