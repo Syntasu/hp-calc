@@ -67,19 +67,5 @@ namespace hp_calc
                 }
             }
         }
-
-        private void Form1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-
-        }
-
-
-        //private float GetRowOffset(int row)
-        //{
-        //    const float padding = 0.0f;
-        //    const float rowSize = 0.165f;
-
-        //    return (row * rowSize) + padding;
-        //}
     }
 }

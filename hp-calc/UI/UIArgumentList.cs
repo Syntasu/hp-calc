@@ -1,5 +1,4 @@
-﻿
-using hp_calc.XML;
+﻿using hp_calc.XML;
 using System;
 using System.Collections.Generic;
 

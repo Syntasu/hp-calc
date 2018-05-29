@@ -31,16 +31,7 @@ namespace hp_calc.UI
 
             foreach (var item in layout.Element)
             {
-                //tring data = $"{item.Name}, {item.Position}, {item.Size}, {item.Type}, [ ";
                 ProccessElement(item);
-
-                //foreach (var option in item.Options.Option)
-                //{
-                //    data += $"{option.Type} = {option.Text}, ";
-                //}
-
-                //data += " ]";
-                //MessageBox.Show(data);
             }
 
             reader.Close();

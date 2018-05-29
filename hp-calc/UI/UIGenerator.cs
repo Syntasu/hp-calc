@@ -23,21 +23,13 @@ namespace hp_calc.UI
 	public class UIGenerator
 	{
 		private UIGrid grid;
+        public Dictionary<string, UIDesc> Controls { get; } = new Dictionary<string, UIDesc>();
 
-		private Dictionary<string, UIDesc> controls = new Dictionary<string, UIDesc>();
-		public Dictionary<string, UIDesc> Controls
+        public IEnumerable<Control> ControlList
 		{
 			get
 			{
-				return controls;
-			}
-		}
-
-		public IEnumerable<Control> ControlList
-		{
-			get
-			{
-				foreach (var kvp in controls)
+				foreach (var kvp in Controls)
 				{
 					yield return kvp.Value.ControlRef;
 				}
@@ -53,7 +45,7 @@ namespace hp_calc.UI
         {
             grid.Refresh(width, height);
 
-            foreach (var control in controls)
+            foreach (var control in Controls)
             {
                 UIDesc desc = control.Value;
 
@@ -76,7 +68,7 @@ namespace hp_calc.UI
                 Size = size
             };
 
-            controls.Add(name, MakeUIDescription(name, new Vector2(x, y), new Vector2(w, h), textBox));
+            Controls.Add(name, MakeUIDescription(name, new Vector2(x, y), new Vector2(w, h), textBox));
         }
 
 		public void AddButton(string name, float x, float y, float w, float h, UIArgumentList args)
@@ -91,7 +83,7 @@ namespace hp_calc.UI
                 Size = size
             };
 
-            controls.Add(name, MakeUIDescription(name, new Vector2(x,y), new Vector2(w, h), button));
+            Controls.Add(name, MakeUIDescription(name, new Vector2(x,y), new Vector2(w, h), button));
 		}
 
 		private UIDesc MakeUIDescription(string name, Vector2 position, Vector2 size, Control control)
