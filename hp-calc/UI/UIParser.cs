@@ -60,6 +60,18 @@ namespace hp_calc.UI
                 case "button":
                     currentGenerator.AddButton(elementName, position.x, position.y, size.x, size.y, argsList);
                     break;
+                case "radio":
+                    currentGenerator.AddRadio(elementName, position.x, position.y, size.x, size.y, argsList);
+                    break;
+                case "checkbox":
+                    currentGenerator.AddCheckBox(elementName, position.x, position.y, size.x, size.y, argsList);
+                    break;
+                case "list":
+                    currentGenerator.AddList(elementName, position.x, position.y, size.x, size.y, argsList);
+                    break;
+                case "label":
+                    currentGenerator.AddLabel(elementName, position.x, position.y, size.x, size.y, argsList);
+                    break;
             }
         }
     }

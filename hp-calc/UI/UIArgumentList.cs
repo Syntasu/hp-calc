@@ -9,6 +9,8 @@ namespace hp_calc.UI
         Value, 
         Multiline,
         Readonly,
+        Checked,
+        Visibillity
     }
 
     public class UIArgumentList
