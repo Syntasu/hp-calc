@@ -42,6 +42,8 @@ namespace hp_calc.UI
                 //data += " ]";
                 //MessageBox.Show(data);
             }
+
+            reader.Close();
         }
 
         private void ProccessElement(Element e)
@@ -57,6 +59,9 @@ namespace hp_calc.UI
             {
                 case "textbox":
                     currentGenerator.AddTextbox(elementName, position.x, position.y, size.x, size.y);
+                    break;
+                case "button":
+                    currentGenerator.AddButton(elementName, position.x, position.y, size.x, size.y);
                     break;
             }
         }

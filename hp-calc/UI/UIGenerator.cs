@@ -49,6 +49,11 @@ namespace hp_calc.UI
 			this.grid = grid;
 		}
 
+        public void Resize(int width, int height)
+        {
+            
+        }
+
         public void Refresh(int width, int height)
         {
             grid.Refresh(width, height);

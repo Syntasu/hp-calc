@@ -26,12 +26,13 @@ namespace hp_calc
             UIParser parser = new UIParser();
             parser.LoadUIFromFile(userInterface);
 
-
             //Add the controls we generated to the form.
             foreach (var controls in userInterface.ControlList)
             {
                 Controls.Add(controls);
             }
+
+            KeyPreview = true;
         }
 
         private void Form1_ResizeEnd(object sender, EventArgs e)
@@ -39,12 +40,46 @@ namespace hp_calc
             userInterface.Refresh(Width, Height);
         }
 
-        private float GetRowOffset(int row)
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            const float padding = 0.0f;
-            const float rowSize = 0.165f;
+            if (e.KeyCode == Keys.F5)
+            {
+                //Add the controls we generated to the form.
+                foreach (var controls in userInterface.ControlList)
+                {
+                    Controls.Remove(controls);
+                }
 
-            return (row * rowSize) + padding;
+                userInterface = null;
+
+                //Create a grid based on the forms widht/height, feed that into the UI generator.
+                UIGrid grid = new UIGrid(Width, Height);
+                userInterface = new UIGenerator(grid);
+
+                //Load the XML file and generate the controls.
+                UIParser parser = new UIParser();
+                parser.LoadUIFromFile(userInterface);
+
+                //Add the controls we generated to the form.
+                foreach (var controls in userInterface.ControlList)
+                {
+                    Controls.Add(controls);
+                }
+            }
         }
-	}
+
+        private void Form1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+
+        }
+
+
+        //private float GetRowOffset(int row)
+        //{
+        //    const float padding = 0.0f;
+        //    const float rowSize = 0.165f;
+
+        //    return (row * rowSize) + padding;
+        //}
+    }
 }
