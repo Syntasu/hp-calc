@@ -73,6 +73,12 @@ namespace hp_calc.UI
                 Size = size
             };
 
+            if (Controls.ContainsKey(name))
+            {
+                MessageBox.Show("Layout error, trying to add elements with same name. Ignoring element....", "Layout parsing warning");
+                return;
+            }
+
             Controls.Add(name, MakeUIDescription(
                 name,
                 args.Get<bool>(UIArgumentProperty.Visible),
@@ -92,6 +98,12 @@ namespace hp_calc.UI
                 Location = position,
                 Size = size
             };
+
+            if (Controls.ContainsKey(name))
+            {
+                MessageBox.Show("Layout error, trying to add elements with same name. Ignoring element....", "Layout parsing warning");
+                return;
+            }
 
             Controls.Add(name, MakeUIDescription(
                 name,
@@ -114,6 +126,12 @@ namespace hp_calc.UI
                 Size = size
             };
 
+            if (Controls.ContainsKey(name))
+            {
+                MessageBox.Show("Layout error, trying to add elements with same name. Ignoring element....", "Layout parsing warning");
+                return;
+            }
+
             Controls.Add(name, MakeUIDescription(
                 name,
                 args.Get<bool>(UIArgumentProperty.Visible),
@@ -134,6 +152,12 @@ namespace hp_calc.UI
                 Size = size
             };
 
+            if (Controls.ContainsKey(name))
+            {
+                MessageBox.Show("Layout error, trying to add elements with same name. Ignoring element....", "Layout parsing warning");
+                return;
+            }
+
             Controls.Add(name, MakeUIDescription(
                 name,
                 args.Get<bool>(UIArgumentProperty.Visible),
@@ -152,6 +176,12 @@ namespace hp_calc.UI
                 Location = position,
                 Size = size,
             };
+
+            if (Controls.ContainsKey(name))
+            {
+                MessageBox.Show("Layout error, trying to add elements with same name. Ignoring element....", "Layout parsing warning");
+                return;
+            }
 
             Controls.Add(name, MakeUIDescription(
                 name,
@@ -173,6 +203,12 @@ namespace hp_calc.UI
                 Location = position,
                 Size = size,
             };
+
+            if(Controls.ContainsKey(name))
+            {
+                MessageBox.Show("Layout error, trying to add elements with same name. Ignoring element....", "Layout parsing warning");
+                return;
+            }
 
             Controls.Add(name, MakeUIDescription(
                 name, 

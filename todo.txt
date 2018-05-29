@@ -3,6 +3,8 @@
 [x] Element visibility.
 [x] Full window resizing, reset scaling to 1.0 to what ever it's rescaled to. (note: might be hard :/)
 [ ] try/catch for xml syntax error at line 29 UIparser.cs
+[ ] Check for robustness (i.e xml syntax errors).
+[ ] Comment current code
 ---------------------------------------------------------------------------------------
 [ ] A way to interact with existing elements
 	[ ] - Button callback
@@ -11,7 +13,6 @@
 	[ ] - Checkbox checked
 	[ ] - Radio button checked/changed.
 [ ] A way of controlling visibility of elements
-[ ] Comment current code
 [ ] Clean up existing code.
 ---------------------------------------------------------------------------------------
 [ ] 3 types of arrays

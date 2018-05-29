@@ -45,6 +45,7 @@ namespace hp_calc
 
         float sx = 0.5f;
         float sy = 0.5f;
+
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F5)

@@ -1,6 +1,7 @@
 ﻿using hp_calc.XML;
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace hp_calc.UI
 {
@@ -17,7 +18,7 @@ namespace hp_calc.UI
     {
         private IDictionary<UIArgumentProperty, object> arguments;
 
-        public UIArgumentList(IList<Option> options)
+        public void Populate(IList<Option> options)
         {
             arguments = new Dictionary<UIArgumentProperty, object>();
 
@@ -26,9 +27,10 @@ namespace hp_calc.UI
                 string propertyName = option.Type.ToLower();
                 bool validProperty = Enum.TryParse(propertyName, true, out UIArgumentProperty prop);
 
-                if(!validProperty)
+                if (!validProperty)
                 {
-                    throw new ArgumentException("The given property is an unknown property.");
+                    //We don't know what property this is, just ignore it I guess.
+                    continue;
                 }
 
                 arguments.Add(prop, option.Text);
@@ -37,11 +39,23 @@ namespace hp_calc.UI
 
         public T Get<T>(UIArgumentProperty prop)
         {
+            if(arguments == null || arguments.Count <= 0)
+            {
+                return default(T);
+            }
+
             foreach (var arg in arguments)
             {
                 if (arg.Key != prop) continue;
 
-                return (T)Convert.ChangeType(arg.Value, typeof(T));
+                try
+                {
+                    return (T)Convert.ChangeType(arg.Value, typeof(T));
+                }
+                catch(Exception e)
+                {
+                    MessageBox.Show("A wrong property value was supplied for " + arg.Key + "=" + arg.Value + ", error: " + e.Message);
+                }
             }
 
             return default(T); // we did not find an argument with this propery type.

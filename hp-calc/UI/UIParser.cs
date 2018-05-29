@@ -1,6 +1,8 @@
 ﻿using hp_calc.Data;
 using hp_calc.XML;
 using System;
+using System.IO;
+using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -18,59 +20,92 @@ namespace hp_calc.UI
             }
         }
 
-        private UIGenerator currentGenerator = null;
-        
-
         public void LoadUIFromFile(UIGenerator generator)
         {
-            currentGenerator = generator;
+            //Read, deserialize the file and convert it into a Layout object.
+            Layout layout = default(Layout);
+            XmlReader reader = null;
+            XmlSerializer serializer = null;
 
-            XmlReader reader = XmlReader.Create(path);
-            XmlSerializer serializer = new XmlSerializer(typeof(Layout));
-            Layout layout = serializer.Deserialize(reader) as Layout;
-
-            foreach (var item in layout.Element)
+            try
             {
-                ProccessElement(item);
+                reader = XmlReader.Create(path);
+                serializer = new XmlSerializer(typeof(Layout));
+                layout = serializer.Deserialize(reader) as Layout;
+            }
+            catch(InvalidOperationException e)
+            {
+                MessageBox.Show("There was some syntax error in layout xml: " + e.InnerException.Message, "Layout parsing error");
+                Application.Exit();
+                return;
+            }
+            catch(FileNotFoundException e)
+            {
+                MessageBox.Show("Could not find layout.xml at: " + path);
+                Application.Exit();
+                return;
+            }
+            finally
+            {
+                if (reader != null && reader.ReadState != ReadState.Closed)
+                {
+                    reader.Close();
+                }
             }
 
-            reader.Close();
+            //Process each individual element.
+            foreach (var item in layout.Element)
+            {
+                ProccessElement(generator, item);
+            }
         }
 
-        private void ProccessElement(Element e)
+        private void ProccessElement(UIGenerator generator, Element e)
         {
+            //Check if the required fields are present.
+            if(e.Name == null || e.Position == null || e.Size == null || e.Type == null)
+            {
+                MessageBox.Show(
+                    "Cannot add element to layout if the required fields are undefined (required is type, name, position and size)." +
+                    $"Element information: Name={e.Name}, Position={e.Position}, Size={e.Size}, Type={e.Type}",
+                    "Layout parsing error"
+                );
+                return;
+            }
+
             string elementName = e.Name;
             Vector2 position = Vector2.FromString(e.Position);
             Vector2 size = Vector2.FromString(e.Size);
             Options options = e.Options;
 
-            //Check if a type was defined...
-            if (e.Type == null)
+            UIArgumentList argsList = new UIArgumentList();
+
+            //Only popluate the argument list if we have some options available.
+            if(options != null && options.Option != null && options.Option.Count > 0)
             {
-                throw new ArgumentException("Cannot add element to layout if type is undefined.");
+                argsList.Populate(options.Option);
             }
 
-            UIArgumentList argsList = new UIArgumentList(options.Option);
-
+            //TODO: Unugly-fy this?
             switch (e.Type.ToLower())
             {
                 case "textbox":
-                    currentGenerator.AddTextbox(elementName, position.x, position.y, size.x, size.y, argsList);
+                    generator.AddTextbox(elementName, position.x, position.y, size.x, size.y, argsList);
                     break;
                 case "button":
-                    currentGenerator.AddButton(elementName, position.x, position.y, size.x, size.y, argsList);
+                    generator.AddButton(elementName, position.x, position.y, size.x, size.y, argsList);
                     break;
                 case "radio":
-                    currentGenerator.AddRadio(elementName, position.x, position.y, size.x, size.y, argsList);
+                    generator.AddRadio(elementName, position.x, position.y, size.x, size.y, argsList);
                     break;
                 case "checkbox":
-                    currentGenerator.AddCheckBox(elementName, position.x, position.y, size.x, size.y, argsList);
+                    generator.AddCheckBox(elementName, position.x, position.y, size.x, size.y, argsList);
                     break;
                 case "list":
-                    currentGenerator.AddList(elementName, position.x, position.y, size.x, size.y, argsList);
+                    generator.AddList(elementName, position.x, position.y, size.x, size.y, argsList);
                     break;
                 case "label":
-                    currentGenerator.AddLabel(elementName, position.x, position.y, size.x, size.y, argsList);
+                    generator.AddLabel(elementName, position.x, position.y, size.x, size.y, argsList);
                     break;
             }
         }

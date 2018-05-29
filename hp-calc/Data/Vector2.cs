@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace hp_calc.Data
 {
@@ -53,7 +54,9 @@ namespace hp_calc.Data
 
             if(values.Length < 2)
             {
-                throw new ArgumentException("Cannot parse Vector2 if X and/or Y components are not defined.");
+                MessageBox.Show("Layout error; string to Vector2 failed, expected left and right hand side arguments, got: " + input, "Layout parsing error");
+                Application.Exit();
+                return new Vector2(0, 0);
             }
 
             bool parsedX = float.TryParse(values[0], out float x);
@@ -61,7 +64,9 @@ namespace hp_calc.Data
 
             if(!parsedX || !parsedY)
             {
-                throw new ArgumentException("Given values cannot be parsed to an Vector2 (to a float).");
+                MessageBox.Show("Layout error; could not parse string to Vector2, input: " + input, "Layout parsing error");
+                Application.Exit();
+                return new Vector2(0, 0);
             }
 
             return new Vector2(x, y);
