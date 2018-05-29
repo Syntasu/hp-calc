@@ -10,6 +10,9 @@ namespace hp_calc.UI
 {
     public class UIParser
     {
+        /// <summary>
+        ///     Define the path to the layout.xml file.
+        /// </summary>
         private string path
         {
             get
@@ -20,7 +23,11 @@ namespace hp_calc.UI
             }
         }
 
-        public void LoadUIFromFile(UIGenerator generator)
+        /// <summary>
+        ///     Load a layout from an (xml) file.
+        /// </summary>
+        /// <param name="generator">The generator we want to apply all the mutation to.</param>
+        public void LoadLayout(UIGenerator generator)
         {
             //Read, deserialize the file and convert it into a Layout object.
             Layout layout = default(Layout);
@@ -60,23 +67,28 @@ namespace hp_calc.UI
             }
         }
 
-        private void ProccessElement(UIGenerator generator, Element e)
+        /// <summary>
+        ///     Process each individual element we read from the XML>
+        /// </summary>
+        /// <param name="generator">Generator we need to apply it to.</param>
+        /// <param name="element">The element we are currently processing.</param>
+        private void ProccessElement(UIGenerator generator, Element element)
         {
             //Check if the required fields are present.
-            if(e.Name == null || e.Position == null || e.Size == null || e.Type == null)
+            if(element.Name == null || element.Position == null || element.Size == null || element.Type == null)
             {
                 MessageBox.Show(
                     "Cannot add element to layout if the required fields are undefined (required is type, name, position and size)." +
-                    $"Element information: Name={e.Name}, Position={e.Position}, Size={e.Size}, Type={e.Type}",
+                    $"Element information: Name={element.Name}, Position={element.Position}, Size={element.Size}, Type={element.Type}",
                     "Layout parsing error"
                 );
                 return;
             }
 
-            string elementName = e.Name;
-            Vector2 position = Vector2.FromString(e.Position);
-            Vector2 size = Vector2.FromString(e.Size);
-            Options options = e.Options;
+            string elementName = element.Name;
+            Vector2 position = Vector2.FromString(element.Position);
+            Vector2 size = Vector2.FromString(element.Size);
+            Options options = element.Options;
 
             UIArgumentList argsList = new UIArgumentList();
 
@@ -87,7 +99,7 @@ namespace hp_calc.UI
             }
 
             //TODO: Unugly-fy this?
-            switch (e.Type.ToLower())
+            switch (element.Type.ToLower())
             {
                 case "textbox":
                     generator.AddTextbox(elementName, position.x, position.y, size.x, size.y, argsList);

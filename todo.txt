@@ -2,9 +2,9 @@
 [x] Extend the current .xml file to support all needed elements.
 [x] Element visibility.
 [x] Full window resizing, reset scaling to 1.0 to what ever it's rescaled to. (note: might be hard :/)
-[ ] try/catch for xml syntax error at line 29 UIparser.cs
-[ ] Check for robustness (i.e xml syntax errors).
-[ ] Comment current code
+[x] try/catch for xml syntax error at line 29 UIparser.cs
+[x] Check for robustness (i.e xml syntax errors).
+[x] Comment current code
 ---------------------------------------------------------------------------------------
 [ ] A way to interact with existing elements
 	[ ] - Button callback
@@ -14,6 +14,7 @@
 	[ ] - Radio button checked/changed.
 [ ] A way of controlling visibility of elements
 [ ] Clean up existing code.
+[ ] Look through the comments again
 ---------------------------------------------------------------------------------------
 [ ] 3 types of arrays
 [ ] Switch between them at runtime

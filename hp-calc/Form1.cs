@@ -27,7 +27,7 @@ namespace hp_calc
 
             //Load the XML file and generate the controls.
             UIParser parser = new UIParser();
-            parser.LoadUIFromFile(userInterface);
+            parser.LoadLayout(userInterface);
 
             //Add the controls we generated to the form.
             foreach (var controls in userInterface.GetControlRenderList)
@@ -38,14 +38,18 @@ namespace hp_calc
             KeyPreview = true;
         }
 
+        /// <summary>
+        ///     When the form1 resizes, we want to recalculate the user interface.
+        /// </summary>
         private void Form1_ResizeEnd(object sender, EventArgs e)
         {
             userInterface.Refresh(Width, Height);
         }
 
+
+        //TODO: DEBUG, REMOVE
         float sx = 0.5f;
         float sy = 0.5f;
-
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F5)
@@ -64,7 +68,7 @@ namespace hp_calc
 
                 //Load the XML file and generate the controls.
                 UIParser parser = new UIParser();
-                parser.LoadUIFromFile(userInterface);
+                parser.LoadLayout(userInterface);
 
                 //Add the controls we generated to the form.
                 foreach (var controls in userInterface.GetControlRenderList)
