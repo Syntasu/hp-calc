@@ -7,6 +7,7 @@ namespace hp_calc
 	public partial class Form1 : Form
 	{
 		private UIGenerator userInterface;
+        private UIGrid grid;
 
 		public Form1()
 		{
@@ -18,9 +19,11 @@ namespace hp_calc
         /// </summary>
 		private void Form1_Load(object sender, EventArgs e)
 		{
+            Text = "RPN Calculator";
+            
             //Create a grid based on the forms widht/height, feed that into the UI generator.
-			UIGrid grid = new UIGrid(Width, Height);
-			userInterface = new UIGenerator(grid);
+			grid = new UIGrid(Width, Height);
+            userInterface = new UIGenerator(grid);
 
             //Load the XML file and generate the controls.
             UIParser parser = new UIParser();
@@ -40,6 +43,8 @@ namespace hp_calc
             userInterface.Refresh(Width, Height);
         }
 
+        float sx = 0.5f;
+        float sy = 0.5f;
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F5)
@@ -65,6 +70,37 @@ namespace hp_calc
                 {
                     Controls.Add(controls);
                 }
+            }
+
+            if(e.KeyCode == Keys.F7)
+            {
+                sx += 0.01f;
+                grid.Scale(sx, sy);
+                userInterface.Refresh(Width, Height);
+            }
+
+
+            if (e.KeyCode == Keys.F8)
+            {
+                sx -= 0.01f;
+                grid.Scale(sx, sy);
+                userInterface.Refresh(Width, Height);
+            }
+
+
+            if (e.KeyCode == Keys.F9)
+            {
+                sy += 0.01f;
+                grid.Scale(sx, sy);
+                userInterface.Refresh(Width, Height);
+            }
+
+
+            if (e.KeyCode == Keys.F10)
+            {
+                sy -= 0.01f;
+                grid.Scale(sx, sy);
+                userInterface.Refresh(Width, Height);
             }
         }
     }

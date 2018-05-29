@@ -21,6 +21,12 @@ namespace hp_calc.Data
             y *= b.y;
         }
 
+        public void Divide(Vector2 b)
+        {
+            x /= b.x;
+            y /= b.y;
+        }
+
         public void Scalar(float scalar)
         {
             x *= scalar;
