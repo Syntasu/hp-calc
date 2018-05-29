@@ -1,17 +1,27 @@
 ﻿using hp_calc.XML;
+using System;
 using System.Windows.Forms;
 using System.Xml;
-using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace hp_calc.UI
 {
     public class UIParser
     {
-        public UIGenerator GetInterface()
+        private string path
         {
-            //TODO: Not use a hardcoded path.
-            XmlReader reader = XmlReader.Create(@"W:\hp-calc\hp-calc\layout.xml");
+            get
+            {
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                string file = "layout.xml";
+                return baseDir + file;
+            }
+        }
+        
+
+        public UIGenerator LoadUIFromFile()
+        {
+            XmlReader reader = XmlReader.Create(path);
             XmlSerializer serializer = new XmlSerializer(typeof(Layout));
             Layout layout = serializer.Deserialize(reader) as Layout;
 
