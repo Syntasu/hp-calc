@@ -47,7 +47,8 @@ namespace hp_calc
         }
 
 
-        //TODO: DEBUG, REMOVE
+        //@Remove @Debug These variables are used for scale testing and also the keydown function can be removed at
+        //               when we are done with testing of the scaling.
         float sx = 0.5f;
         float sy = 0.5f;
         private void Form1_KeyDown(object sender, KeyEventArgs e)

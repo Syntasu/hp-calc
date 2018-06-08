@@ -98,26 +98,25 @@ namespace hp_calc.UI
                 argsList.Populate(options.Option);
             }
 
-            //TODO: Unugly-fy this?
             switch (element.Type.ToLower())
             {
                 case "textbox":
-                    generator.AddTextbox(elementName, position.x, position.y, size.x, size.y, argsList);
+                    generator.AddControl<TextBox>(elementName, position.x, position.y, size.x, size.y, argsList);
                     break;
                 case "button":
-                    generator.AddButton(elementName, position.x, position.y, size.x, size.y, argsList);
+                    generator.AddControl<Button>(elementName, position.x, position.y, size.x, size.y, argsList);
                     break;
                 case "radio":
-                    generator.AddRadio(elementName, position.x, position.y, size.x, size.y, argsList);
+                    generator.AddControl<RadioButton>(elementName, position.x, position.y, size.x, size.y, argsList);
                     break;
                 case "checkbox":
-                    generator.AddCheckBox(elementName, position.x, position.y, size.x, size.y, argsList);
+                    generator.AddControl<CheckBox>(elementName, position.x, position.y, size.x, size.y, argsList);
                     break;
                 case "list":
-                    generator.AddList(elementName, position.x, position.y, size.x, size.y, argsList);
+                    generator.AddControl<ListBox>(elementName, position.x, position.y, size.x, size.y, argsList);
                     break;
                 case "label":
-                    generator.AddLabel(elementName, position.x, position.y, size.x, size.y, argsList);
+                    generator.AddControl<Label>(elementName, position.x, position.y, size.x, size.y, argsList);
                     break;
             }
         }

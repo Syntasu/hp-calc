@@ -1,4 +1,5 @@
 ﻿using hp_calc.Data;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -84,175 +85,53 @@ namespace hp_calc.UI
             }
         }
 
-        //TODO: Better method....
-        public void AddTextbox(string name, float x, float y, float w, float h, UIArgumentList args)
-		{
-            Vector2 position = grid.Translate(x, y);
-            Vector2 size = grid.Translate(w, h);
-
-            TextBox textBox = new TextBox
-            {
-                Text = args.Get<string>(UIArgumentProperty.Value),
-                Multiline = args.Get<bool>(UIArgumentProperty.Multiline),
-                ReadOnly = args.Get<bool>(UIArgumentProperty.Readonly),
-                Location = position,
-                Size = size
-            };
-
-            if (Controls.ContainsKey(name))
-            {
-                MessageBox.Show("Layout error, trying to add elements with same name. Ignoring element....", "Layout parsing warning");
-                return;
-            }
-
-            Controls.Add(name, MakeUIDescription(
-                name,
-                args.Get<bool>(UIArgumentProperty.Visible),
-                new Vector2(x, y),
-                new Vector2(w, h), textBox)
-            );
-        }
-
-        //TODO: Better method....
-        public void AddButton(string name, float x, float y, float w, float h, UIArgumentList args)
-		{
-            Vector2 position = grid.Translate(x, y);
-            Vector2 size = grid.Translate(w, h);
-
-            Button button = new Button
-            {
-                Text = args.Get<string>(UIArgumentProperty.Value),
-                Location = position,
-                Size = size
-            };
-
-            if (Controls.ContainsKey(name))
-            {
-                MessageBox.Show("Layout error, trying to add elements with same name. Ignoring element....", "Layout parsing warning");
-                return;
-            }
-
-            Controls.Add(name, MakeUIDescription(
-                name,
-                args.Get<bool>(UIArgumentProperty.Visible),
-                new Vector2(x, y),
-                new Vector2(w, h), button)
-            );
-        }
-
-        //TODO: Better method....
-        public void AddCheckBox(string name, float x, float y, float w, float h, UIArgumentList args)
+        public T AddControl<T>(string name, float x, float y, float width, float height, UIArgumentList args)
+            where T : Control
         {
-            Vector2 position = grid.Translate(x, y);
-            Vector2 size = grid.Translate(w, h);
-
-            CheckBox checkbox = new CheckBox
-            {
-                Text = args.Get<string>(UIArgumentProperty.Value),
-                Checked = args.Get<bool>(UIArgumentProperty.Checked),
-                Location = position,
-                Size = size
-            };
-
+            //Check if we are not adding any duplicates.
             if (Controls.ContainsKey(name))
             {
                 MessageBox.Show("Layout error, trying to add elements with same name. Ignoring element....", "Layout parsing warning");
-                return;
+                return default(T);
             }
 
-            Controls.Add(name, MakeUIDescription(
-                name,
-                args.Get<bool>(UIArgumentProperty.Visible),
-                new Vector2(x, y),
-                new Vector2(w, h), checkbox)
-            );
-        }
-
-        //TODO: Better method....
-        public void AddLabel(string name, float x, float y, float w, float h, UIArgumentList args)
-        {
+            //Translate the position and the size.
             Vector2 position = grid.Translate(x, y);
-            Vector2 size = grid.Translate(w, h);
+            Vector2 size = grid.Translate(width, height);
 
-            Label label = new Label
-            {
-                Text = args.Get<string>(UIArgumentProperty.Value),
-                Location = position,
-                Size = size
-            };
+            //Create and set the properties of a control.
+            Control control = (Control)Activator.CreateInstance(typeof(T));
+            control.Location = position;
+            control.Size = size;
+            control.Text = args.Get<string>(UIArgumentProperty.Value);
 
-            if (Controls.ContainsKey(name))
+            //Add the specific properties for each type of control.
+            if(control is TextBox)
             {
-                MessageBox.Show("Layout error, trying to add elements with same name. Ignoring element....", "Layout parsing warning");
-                return;
+                TextBox textbox = (TextBox)control;
+                textbox.Multiline = args.Get<bool>(UIArgumentProperty.Multiline);
+                textbox.ReadOnly = args.Get<bool>(UIArgumentProperty.Readonly);
+            }
+            else if(control is CheckBox)
+            {
+                CheckBox checkbox = (CheckBox)control;
+                checkbox.Checked = args.Get<bool>(UIArgumentProperty.Checked);
+            }
+            else if (control is RadioButton)
+            {
+                RadioButton radioButton = (RadioButton)control;
+                radioButton.Checked = args.Get<bool>(UIArgumentProperty.Checked);
             }
 
-            Controls.Add(name, MakeUIDescription(
-                name,
-                args.Get<bool>(UIArgumentProperty.Visible),
-                new Vector2(x, y),
-                new Vector2(w, h), label)
+            UIDesc description = new UIDesc(
+                name, args.Get<bool>(UIArgumentProperty.Visible),
+                position, size, control
             );
+
+            //Add the control to the collection.
+            Controls.Add(name, description);
+
+            return control as T;
         }
-
-        //TODO: Better method....
-        public void AddList(string name, float x, float y, float w, float h, UIArgumentList args)
-        {
-            Vector2 position = grid.Translate(x, y);
-            Vector2 size = grid.Translate(w, h);
-
-            ListBox list = new ListBox
-            {
-                Location = position,
-                Size = size,
-            };
-
-            if (Controls.ContainsKey(name))
-            {
-                MessageBox.Show("Layout error, trying to add elements with same name. Ignoring element....", "Layout parsing warning");
-                return;
-            }
-
-            Controls.Add(name, MakeUIDescription(
-                name,
-                args.Get<bool>(UIArgumentProperty.Visible),
-                new Vector2(x, y),
-                new Vector2(w, h), list)
-            );
-        }
-
-        //TODO: Better method....
-        public void AddRadio(string name, float x, float y, float w, float h, UIArgumentList args)
-        {
-            Vector2 position = grid.Translate(x, y);
-            Vector2 size = grid.Translate(w, h);
-
-            RadioButton button = new RadioButton
-            {
-                Text = args.Get<string>(UIArgumentProperty.Value),
-                Checked = args.Get<bool>(UIArgumentProperty.Checked),
-                Location = position,
-                Size = size,
-            };
-
-            if(Controls.ContainsKey(name))
-            {
-                MessageBox.Show("Layout error, trying to add elements with same name. Ignoring element....", "Layout parsing warning");
-                return;
-            }
-
-            Controls.Add(name, MakeUIDescription(
-                name, 
-                args.Get<bool>(UIArgumentProperty.Visible), 
-                new Vector2(x, y), 
-                new Vector2(w, h), button)
-            );
-        }
-
-        //TODO: Only call this one time and remove the method, inline it with the general method.
-        private UIDesc MakeUIDescription(string name, bool visible, Vector2 position, Vector2 size, Control control)
-		{
-			return new UIDesc(name, visible, position, size, control);
-		}
 	}
 }
