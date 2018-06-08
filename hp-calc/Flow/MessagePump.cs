@@ -19,16 +19,23 @@ namespace hp_calc.Flow
             }
         }
 
-        private IList<MessagePumpSubscriber> subscribers = new List<MessagePumpSubscriber>();
+        private static IList<MessagePumpSubscriber> subscribers = new List<MessagePumpSubscriber>();
 
-        public void DispatchMessage(string type, string action)
+        public static void DispatchMessage(string name, string action)
         {
-
+            foreach (MessagePumpSubscriber subscriber in subscribers)
+            {
+                if(subscriber.name == name && subscriber.action == action)
+                {
+                    subscriber.callback(name, action);
+                }
+            }
         }
 
-        public void Subscriber(string name, string action, Action<string, string> callback)
+        public static void Subscribe(string name, string action, Action<string, string> callback)
         {
-
+            MessagePumpSubscriber newSubscriber = new MessagePumpSubscriber(name, action, callback);
+            subscribers.Add(newSubscriber);
         }
 
     }

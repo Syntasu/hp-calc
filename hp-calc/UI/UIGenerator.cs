@@ -125,12 +125,11 @@ namespace hp_calc.UI
 
             UIDesc description = new UIDesc(
                 name, args.Get<bool>(UIArgumentProperty.Visible),
-                position, size, control
+                new Vector2(x,y), new Vector2(width, height), control
             );
 
             //Add the control to the collection.
             Controls.Add(name, description);
-
             return control as T;
         }
 	}

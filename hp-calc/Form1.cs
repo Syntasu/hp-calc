@@ -1,4 +1,5 @@
-﻿using hp_calc.UI;
+﻿using hp_calc.Flow;
+using hp_calc.UI;
 using System;
 using System.Windows.Forms;
 
@@ -36,6 +37,11 @@ namespace hp_calc
             }
 
             KeyPreview = true;
+
+            MessagePump.Subscribe("form", "resize", (name, action) =>
+            {
+                //MessageBox.Show("Something resized!");
+            });
         }
 
         /// <summary>
@@ -44,6 +50,7 @@ namespace hp_calc
         private void Form1_ResizeEnd(object sender, EventArgs e)
         {
             userInterface.Refresh(Width, Height);
+            MessagePump.DispatchMessage("form", "resize");
         }
 
 
@@ -53,6 +60,7 @@ namespace hp_calc
         float sy = 0.5f;
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            //Button to refresh the entire layout.
             if (e.KeyCode == Keys.F5)
             {
                 //Add the controls we generated to the form.
