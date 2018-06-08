@@ -99,6 +99,19 @@ namespace hp_calc.UI
             }
         }
 
+        public T GetControlReference<T>(string name) where T : Control
+        {
+            foreach (var control in Controls)
+            {
+                if (control.Key.ToLower() == name.ToLower())
+                {
+                    return control.Value.ControlRef as T;
+                }
+            }
+
+            return default(T);
+        }
+
         public void SetControlVisibility(string name, bool state)
         {
             foreach (var control in Controls)
@@ -151,6 +164,11 @@ namespace hp_calc.UI
 
                 radioButton.CheckedChanged += (obj, sender) => 
                         MessagePump.DispatchMessage(name, "checked", radioButton.Checked);
+            }
+            else if(control is Button button)
+            {
+                button.Click += (obj, sender) =>
+                        MessagePump.DispatchMessage(name, "click");
             }
 
             UIDesc description = new UIDesc(
