@@ -1,4 +1,5 @@
 ﻿using hp_calc.Data;
+using hp_calc.Flow;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -9,7 +10,7 @@ namespace hp_calc.UI
     ///     A struct for storing information about a control we
     ///     added to the UIGenerator.
     /// </summary>
-	public struct UIDesc
+	public class UIDesc
 	{
 		public string Name;
 		public Vector2 Position;
@@ -24,7 +25,21 @@ namespace hp_calc.UI
             Visible = visible;
 			Size = size;
 			ControlRef = controlRef;
+
+            DetermineVisibillity();
 		}
+
+        public void DetermineVisibillity()
+        {
+            if (!Visible)
+            {
+                ControlRef.Hide();
+            }
+            else
+            {
+                ControlRef.Show();
+            }
+        }
 	}
     
     /// <summary>
@@ -53,8 +68,6 @@ namespace hp_calc.UI
 			{
 				foreach (var kvp in Controls)
 				{
-                    if (!kvp.Value.Visible) continue;
-
 					yield return kvp.Value.ControlRef;
 				}
 			}
@@ -82,6 +95,20 @@ namespace hp_calc.UI
 
                 desc.ControlRef.Location = grid.Translate(desc.Position.x, desc.Position.y);
                 desc.ControlRef.Size = grid.Translate(desc.Size.x, desc.Size.y);
+                desc.DetermineVisibillity();
+            }
+        }
+
+        public void SetControlVisibility(string name, bool state)
+        {
+            foreach (var control in Controls)
+            {
+                if (control.Key.ToLower() == name.ToLower())
+                {
+                    UIDesc description = control.Value;
+                    description.Visible = state;
+                    description.DetermineVisibillity();
+                }
             }
         }
 
@@ -106,28 +133,31 @@ namespace hp_calc.UI
             control.Text = args.Get<string>(UIArgumentProperty.Value);
 
             //Add the specific properties for each type of control.
-            if(control is TextBox)
+            if (control is TextBox textbox)
             {
-                TextBox textbox = (TextBox)control;
                 textbox.Multiline = args.Get<bool>(UIArgumentProperty.Multiline);
                 textbox.ReadOnly = args.Get<bool>(UIArgumentProperty.Readonly);
             }
-            else if(control is CheckBox)
+            else if (control is CheckBox checkbox)
             {
-                CheckBox checkbox = (CheckBox)control;
                 checkbox.Checked = args.Get<bool>(UIArgumentProperty.Checked);
+
+                checkbox.CheckedChanged += (obj, sender) =>
+                    MessagePump.DispatchMessage(name, "checked", checkbox.Checked);
             }
-            else if (control is RadioButton)
+            else if (control is RadioButton radioButton)
             {
-                RadioButton radioButton = (RadioButton)control;
                 radioButton.Checked = args.Get<bool>(UIArgumentProperty.Checked);
+
+                radioButton.CheckedChanged += (obj, sender) => 
+                        MessagePump.DispatchMessage(name, "checked", radioButton.Checked);
             }
 
             UIDesc description = new UIDesc(
                 name, args.Get<bool>(UIArgumentProperty.Visible),
-                new Vector2(x,y), new Vector2(width, height), control
+                new Vector2(x, y), new Vector2(width, height), control
             );
-
+            
             //Add the control to the collection.
             Controls.Add(name, description);
             return control as T;

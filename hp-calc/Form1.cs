@@ -36,12 +36,9 @@ namespace hp_calc
                 Controls.Add(controls);
             }
 
-            KeyPreview = true;
+            UIEvents events = new UIEvents(userInterface);
 
-            MessagePump.Subscribe("form", "resize", (name, action) =>
-            {
-                //MessageBox.Show("Something resized!");
-            });
+            KeyPreview = true;
         }
 
         /// <summary>
@@ -50,7 +47,6 @@ namespace hp_calc
         private void Form1_ResizeEnd(object sender, EventArgs e)
         {
             userInterface.Refresh(Width, Height);
-            MessagePump.DispatchMessage("form", "resize");
         }
 
 

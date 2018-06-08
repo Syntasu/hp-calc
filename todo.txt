@@ -1,11 +1,12 @@
-[ ] A way to interact with existing elements
-	[ ] - Button callback
-	[ ] - Listview add
-	[ ] - ListView remove
-	[ ] - Checkbox checked
-	[ ] - Radio button checked/changed.
 [ ] A way of controlling visibility of elements
 ---------------------------------------------------------------------------------------
+[ ] Get control by name
+[ ] Hook up the 1-9 button events
+[ ] Hook up operators
+[ ] Hook up clear, +/-, dot and is
+[ ] Hook up radio buttons for stack implementation.
+[ ] Sort out these ugly name spaces.
+[ ] Comment the code lol
 [ ] 3 types of arrays
 [ ] Switch between them at runtime
 [ ] Show stack contents
